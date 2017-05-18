@@ -1,15 +1,18 @@
+/* eslint-disable*/
 // 配置API接口地址
 // var root = process.env.API_ADDR
-// var root = 'http://api.stage.zihe8888.com/api/';
-var root = location.protocol + location.host;
+var root = 'http://api.stage.zihe8888.com/api/';
+// var root = location.protocol + location.host;
 // 引用axios
 var axios = require('axios');
 // 自定义判断元素类型JS
-function toType (obj) {
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+
+function toType(obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
 }
 // 参数过滤函数
-function filterNull (o) {
+function filterNull(o) {
   for (var key in o) {
     if (o[key] === null) {
       delete o[key];
@@ -34,38 +37,34 @@ function filterNull (o) {
   另外，不同的项目的处理方法也是不一致的，这里出错就是简单的alert
 */
 
-function apiAxios (method, url, params, success, failure) {
+function apiAxios(method, url, params, success, failure) {
   if (params) {
     params = filterNull(params);
   }
   axios({
-    method: method,
-    url: url,
-    data: method === 'POST' || method === 'PUT' ? params : null,
-    params: method === 'GET' || method === 'DELETE' ? params : null,
-    baseURL: root,
-    withCredentials: false
-  })
+      method: method,
+      url: url,
+      data: method === 'POST' || method === 'PUT' ? params : null,
+      params: method === 'GET' || method === 'DELETE' ? params : null,
+      baseURL: root,
+      withCredentials: false
+    })
     .then(function (res) {
-      if (res.data.success === true) {
         if (success) {
           success(res.data);
-        }
-      } else {
-        if (failure) {
+        } else if (failure) {
           failure(res.data);
         } else {
           console.log('error: ' + JSON.stringify(res.data));
         }
-      }
     })
-    .catch(function (err) {
-      let res = err.response;
-      if (err) {
-        console.log('api error, HTTP CODE: ' + res.status);
-        return;
-      }
-    });
+.catch(function (err) {
+  let res = err.response;
+  if (err) {
+    console.log('api error, HTTP CODE: ' + res);
+    return;
+  }
+});
 }
 
 // 返回在vue模板中的调用接口

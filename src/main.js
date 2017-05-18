@@ -10,9 +10,10 @@ import Flex from 'lib-flexible';
 import routes from './config/routes';
 // 引入api.js
 import api from './config/api';
+import axios from 'axios';
 // 绑定api 到全局
 Vue.prototype.$api = api;
-
+Vue.prototype.$ajax = axios;
 // 光引用不成，还得使用
 Vue.use(VueRouter);
 Vue.use(MintUI);
