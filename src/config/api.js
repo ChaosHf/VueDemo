@@ -6,7 +6,7 @@ var root = 'http://api.stage.zihe8888.com/api/';
 // 引用axios
 var axios = require('axios');
 // 自定义判断元素类型JS
-axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+// axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
 function toType(obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase();
